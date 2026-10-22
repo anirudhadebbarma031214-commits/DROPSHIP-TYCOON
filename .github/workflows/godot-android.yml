@@ -77,6 +77,7 @@ jobs:
       - name: Validate Android export configuration
         run: |
           set -euo pipefail
+          mkdir -p build
           echo "=== Android SDK ==="
           echo "ANDROID_HOME=$ANDROID_HOME"
           test -d "$ANDROID_HOME/platform-tools"
