@@ -67,6 +67,10 @@ jobs:
           SETTINGS
           sed -i 's/^          //' "$HOME/.config/godot/editor_settings-4.tres"
           cat "$HOME/.config/godot/editor_settings-4.tres"
+          # Explicitly configure the debug keystore in the Android export preset.
+          sed -i '/^package\/signed=true$/a keystore/debug="'"$HOME"'\/debug.keystore"\nkeystore/debug_user="androiddebugkey"\nkeystore/debug_password="android"' export_presets.cfg
+          echo "Android export preset signing settings configured."
+          grep -E '^(package/signed|keystore/debug)' export_presets.cfg
 
       - name: Import project
         run: godot --headless --path . --import || true
@@ -75,7 +79,7 @@ jobs:
         run: |
           mkdir -p build
           set +e
-          godot --headless --path . --export-debug "Android" build/DropshipTycoon.apk 2>&1 | tee build/export.log
+          godot --headless --verbose --path . --export-debug "Android" build/DropshipTycoon.apk 2>&1 | tee build/export.log
           if [ ! -s build/DropshipTycoon.apk ]; then
             echo "::error title=Godot export failed::$(grep -v '^\s*$' build/export.log | tail -n 25 | tr '\n' '|' )"
             exit 1
