@@ -50,6 +50,13 @@ jobs:
           test -s "$TDIR/android_source.zip"
           godot --version
 
+      - name: Install project Android Gradle build template
+        run: |
+          set -euo pipefail
+          godot --headless --editor --path . --install-android-build-template
+          test -d android/build
+          echo "Project Android build template installed."
+
       - name: Create debug keystore and Godot editor settings
         run: |
           set -euo pipefail
