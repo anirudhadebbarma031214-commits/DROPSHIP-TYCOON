@@ -89,7 +89,11 @@ jobs:
           echo "=== Export preset signing configuration ==="
           grep -E '^(name=|platform=|advanced_options=|package/unique_name=|package/signed=|keystore/debug=|keystore/debug_user=|keystore/debug_password=)' export_presets.cfg
           echo "=== Godot editor import ==="
+          set +e
           godot --headless --editor --path . --quit --verbose 2>&1 | tee build/editor-validation.log
+          EDITOR_STATUS=${PIPESTATUS[0]}
+          set -e
+          echo "Godot editor validation exit code: $EDITOR_STATUS (continuing to export to capture the real preset error)"
           echo "=== Export preset validation and export ==="
 
       - name: Export Android APK
