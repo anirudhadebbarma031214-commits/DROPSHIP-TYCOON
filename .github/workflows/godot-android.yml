@@ -55,7 +55,7 @@ jobs:
             -keyalg RSA -keysize 2048 -validity 10000 \
             -dname "CN=Android Debug,O=Android,C=US"
           mkdir -p "$HOME/.config/godot"
-          cat > "$HOME/.config/godot/editor_settings-4.4.tres" <<SETTINGS
+          cat > "$HOME/.config/godot/editor_settings-4.tres" <<SETTINGS
           [gd_resource type="EditorSettings" format=3]
 
           [resource]
@@ -65,8 +65,8 @@ jobs:
           export/android/debug_keystore_user = "androiddebugkey"
           export/android/debug_keystore_pass = "android"
           SETTINGS
-          sed -i 's/^          //' "$HOME/.config/godot/editor_settings-4.4.tres"
-          cat "$HOME/.config/godot/editor_settings-4.4.tres"
+          sed -i 's/^          //' "$HOME/.config/godot/editor_settings-4.tres"
+          cat "$HOME/.config/godot/editor_settings-4.tres"
 
       - name: Import project
         run: godot --headless --path . --import || true
