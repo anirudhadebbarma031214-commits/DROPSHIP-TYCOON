@@ -1,17 +1,33 @@
-# DROPSHIP TYCOON + NAYA NAGAR
+# DROPSHIP TYCOON — Godot 4 Android
 
-Unity Android project by ANI STUDIO. This repository includes an experimental Indian open-world roleplay mode alongside the original dropshipping tycoon source.
+**ANI STUDIO** · 3D mobile tycoon starter
 
-## Naya Nagar open-world prototype
-- Compact procedural Indian city, roads, colourful low-poly buildings and third-person avatar.
-- Touch movement, sprint/stamina, rupee HUD, delivery jobs, snack shop, Mandir blessing, vehicle toggle and fast travel.
-- Three mall landmarks, stadium, Mandir, bus/auto stand, ten food-outlet signs and Diwali mode.
-- Design document: Docs/NAYA-NAGAR-GDD.md.
+This repository now includes a Godot 4 project alongside the original Unity source. The Android APK build uses Godot and does **not** require a Unity license or the `UNITY_LICENSE` secret.
 
-## Open in Unity
-Use Unity 2022.3 LTS with Android Build Support, Android SDK & NDK Tools, and OpenJDK. Open the repository as a Unity project and run Assets/Scenes/Main.unity.
+## Starter gameplay
+- 3D town, roads, buildings, starter shop and car display
+- Third-person character movement
+- On-screen touch controls for Android; WASD/arrow keys on desktop
+- Starting cash and passive income
+- Buy business expansions to increase income
 
-## Build APK with GitHub Actions
-The workflow .github/workflows/unity-android.yml builds and uploads NAYA-NAGAR.apk. Unity license secrets are required: UNITY_LICENSE, UNITY_EMAIL, and UNITY_PASSWORD (GameCI activation guide: https://game.ci/docs/github/activation).
+## Build an Android APK with GitHub Actions
+1. Open the repository's **Actions** tab.
+2. Select **Build Godot Android APK**.
+3. Click **Run workflow** on the `main` branch.
+4. Open the completed run and scroll to **Artifacts**.
+5. Download `Dropship-Tycoon-Android-APK` and extract `DropshipTycoon.apk`.
 
-Status: source files are committed, but an APK is not confirmed until Actions succeeds. This prototype uses placeholder geometry and needs playtesting and art polish.
+The workflow uses the Godot 4.4.1 CI image and exports an ARM64 Android APK.
+
+## Open locally
+Install Godot 4.4.1 and its matching Android export templates, open this folder as a Godot project, then run `scenes/main.tscn`.
+
+## Project files
+- `project.godot` — Godot project settings
+- `scenes/main.tscn` — main scene
+- `scripts/main.gd` — procedural 3D world, movement, UI and tycoon loop
+- `export_presets.cfg` — Android export preset
+- `.github/workflows/godot-android.yml` — APK workflow
+
+Note: the original Unity project files have been left in the repository as a backup; the new Godot workflow does not use them.
