@@ -45,6 +45,9 @@ jobs:
           unzip -q -j templates.tpz 'templates/android_*' 'templates/version.txt' -d "$TDIR"
           rm -f godot.zip templates.tpz
           ls -la "$TDIR"
+          test -s "$TDIR/android_debug.apk"
+          test -s "$TDIR/android_release.apk"
+          test -s "$TDIR/android_source.zip"
           godot --version
 
       - name: Create debug keystore and Godot editor settings
@@ -67,13 +70,26 @@ jobs:
           SETTINGS
           sed -i 's/^          //' "$HOME/.config/godot/editor_settings-4.4.tres"
           cat "$HOME/.config/godot/editor_settings-4.4.tres"
-          # Explicitly configure the debug keystore in the Android export preset.
-          sed -i '/^package\/signed=true$/a keystore/debug="'"$HOME"'\/debug.keystore"\nkeystore/debug_user="androiddebugkey"\nkeystore/debug_password="android"' export_presets.cfg
-          echo "Android export preset signing settings configured."
-          grep -E '^(package/signed|keystore/debug)' export_presets.cfg
+          echo "Debug keystore created at $HOME/debug.keystore"
+          test -s "$HOME/debug.keystore"
+          echo "Preset signing values are defined once in export_presets.cfg."
 
-      - name: Import project
-        run: godot --headless --path . --import || true
+      - name: Validate Android export configuration
+        run: |
+          set -euo pipefail
+          echo "=== Android SDK ==="
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          test -d "$ANDROID_HOME/platform-tools"
+          test -d "$ANDROID_HOME/platforms/android-35"
+          test -d "$ANDROID_HOME/build-tools/35.0.1"
+          echo "=== Java ==="
+          java -version
+          echo "JAVA_HOME=$JAVA_HOME"
+          echo "=== Export preset signing configuration ==="
+          grep -E '^(name=|platform=|advanced_options=|package/unique_name=|package/signed=|keystore/debug=|keystore/debug_user=|keystore/debug_password=)' export_presets.cfg
+          echo "=== Godot editor import ==="
+          godot --headless --editor --path . --quit --verbose 2>&1 | tee build/editor-validation.log
+          echo "=== Export preset validation and export ==="
 
       - name: Export Android APK
         run: |
