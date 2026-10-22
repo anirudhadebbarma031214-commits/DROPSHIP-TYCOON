@@ -79,6 +79,16 @@ func _make_box(label: String, pos: Vector3, size: Vector3, color: Color) -> Mesh
 	box.material_override = material
 	box.position = pos
 	add_child(box)
+	# Give the ground and buildings real collision so the player can walk around.
+	var body := StaticBody3D.new()
+	body.name = label + " Collision"
+	body.position = pos
+	var collision := CollisionShape3D.new()
+	var shape := BoxShape3D.new()
+	shape.size = size
+	collision.shape = shape
+	body.add_child(collision)
+	add_child(body)
 	return box
 
 func _build_player() -> void:
