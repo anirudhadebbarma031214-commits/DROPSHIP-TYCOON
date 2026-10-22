@@ -111,6 +111,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a6f0eaaac2042b7a6f84d8e2b3a1c10, type: 3}
+  m_Script: {fileID: 11500000, guid: b6f3a20c7d1242c5a9e18f4b7d2c6130, type: 3}
   m_Name:
   m_EditorClassIdentifier:
