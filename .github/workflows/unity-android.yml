@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p artifacts
-          find build -type f -name '*.apk' -exec cp {} artifacts/NAYA-NAGAR.apk \\;
+          find build -type f -name '*.apk' -exec cp {} artifacts/NAYA-NAGAR.apk \;
           test -f artifacts/NAYA-NAGAR.apk
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
